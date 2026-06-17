@@ -17,7 +17,7 @@
   .wrap{max-width:820px;margin:0 auto;padding:0 clamp(16px,5vw,22px);
     padding-left:max(clamp(16px,5vw,22px),env(safe-area-inset-left));
     padding-right:max(clamp(16px,5vw,22px),env(safe-area-inset-right))}
- 
+
   header{text-align:center;padding:clamp(48px,8vw,80px) 0 clamp(56px,11vw,88px);
     flex:1 0 auto;display:flex;flex-direction:column;justify-content:center}
   .kicker{font-family:ui-monospace,monospace;font-size:clamp(.62rem,2.6vw,.72rem);
@@ -34,7 +34,7 @@
     font-weight:500;padding:14px 32px;border-radius:6px;transition:background .2s;cursor:pointer;
     border:0;font-size:1rem;font-family:inherit;min-height:48px}
   .cta:hover{background:var(--accent)}
- 
+
   .info{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,2.5vw,16px);
     margin:clamp(32px,8vw,52px) auto 0;max-width:560px}
   .info>div{border:1px solid var(--line);border-radius:8px;padding:clamp(16px,4vw,22px) clamp(6px,2vw,14px);
@@ -42,7 +42,7 @@
   .info .v{font-family:Georgia,serif;font-size:clamp(1rem,4vw,1.35rem);color:var(--accent);line-height:1.2}
   .info .k{font-family:ui-monospace,monospace;font-size:clamp(.56rem,2.3vw,.66rem);letter-spacing:.6px;
     text-transform:uppercase;color:var(--soft);margin-top:8px}
- 
+
   /* form hidden until requested */
   .survey{border-top:1px solid var(--line);padding:clamp(20px,6vw,32px) 0 clamp(40px,9vw,64px);display:none}
   .survey.open{display:block;flex:1 0 auto}
@@ -52,13 +52,23 @@
   .survey p{color:var(--soft);text-align:center;max-width:520px;margin:0 auto 24px;
     font-size:clamp(.92rem,3.2vw,1rem)}
   .form-box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:0;overflow:hidden;
-    max-width:640px;margin:0 auto}
+    max-width:640px;margin:0 auto;position:relative;min-height:300px}
   .form-box iframe{width:100%;border:0;display:block;
     height:min(2400px,calc(100svh - 60px))}
+  .form-loading{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:16px;background:#fff;
+    color:var(--soft);font-family:ui-monospace,monospace;font-size:.82rem;letter-spacing:.5px;
+    z-index:2;transition:opacity .4s ease}
+  .form-loading.hide{opacity:0;pointer-events:none}
+  .spinner{width:34px;height:34px;border-radius:50%;
+    border:3px solid var(--line);border-top-color:var(--accent);
+    animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(prefers-reduced-motion:reduce){.spinner{animation-duration:1.6s}}
   .back{display:block;text-align:center;margin-top:20px;font-family:ui-monospace,monospace;
     font-size:.8rem;color:var(--soft);text-decoration:none;min-height:44px;padding-top:12px}
   .back:hover{color:var(--ink)}
- 
+
   footer{flex-shrink:0;border-top:1px solid var(--line);
     padding:clamp(24px,5vw,32px) clamp(16px,5vw,22px)
     calc(clamp(24px,5vw,32px) + env(safe-area-inset-bottom))}
@@ -75,7 +85,7 @@
     .foot-in{flex-direction:column;text-align:center;gap:16px}
     .foot-line{text-align:center}
   }
- 
+
   /* very small phones */
   @media(max-width:380px){
     .cta{display:block;width:100%}
@@ -91,7 +101,7 @@
     .form-box iframe{height:calc(100svh - 40px)}
     header{padding:clamp(24px,8vw,48px) 0}
   }
- 
+
   /* ---- minimal motion ---- */
   .cta{transform:translateZ(0)}
   .cta:hover{background:var(--accent);transform:translateY(-2px)}
@@ -99,19 +109,19 @@
   .info>div{transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease}
   .info>div:hover{transform:translateY(-3px);border-color:var(--accent);
     box-shadow:0 6px 18px rgba(31,111,92,.08)}
- 
+
   .fade{opacity:0;transform:translateY(14px);animation:rise .7s ease forwards}
   .fade.d1{animation-delay:.05s}
   .fade.d2{animation-delay:.15s}
   .fade.d3{animation-delay:.25s}
   .fade.d4{animation-delay:.35s}
   @keyframes rise{to{opacity:1;transform:none}}
- 
+
   .survey.open .form-box,.survey.open h2,.survey.open p{animation:rise .55s ease forwards;opacity:0}
   .survey.open h2{animation-delay:.02s}
   .survey.open p{animation-delay:.08s}
   .survey.open .form-box{animation-delay:.14s}
- 
+
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
     .fade,.survey.open .form-box,.survey.open h2,.survey.open p{opacity:1;transform:none}
@@ -120,27 +130,27 @@
 </style>
 </head>
 <body>
- 
+
 <header class="wrap" id="intro">
   <div class="kicker fade d1">Student Research Survey<span class="course">2026</span></div>
   <h1 class="fade d2">The impact of <em>Artificial Intelligence</em><br>on students' learning habits</h1>
   <p class="lede fade d3">A short survey on how AI tools shape the way students study, solve problems, and manage their academic work. Your responses are anonymous and feed directly into our analysis.</p>
   <button class="cta fade d4" id="openBtn">Take the survey &rarr;</button>
- 
+
   <div class="info fade d4">
     <div><div class="v">4</div><div class="k">Areas covered</div></div>
     <div><div class="v">~2 min</div><div class="k">Time to finish</div></div>
     <div><div class="v">Yes</div><div class="k">Fully anonymous</div></div>
   </div>
 </header>
- 
+
 <section class="survey" id="survey"><div class="wrap">
   <h2>Take part in the survey</h2>
   <p>Help us understand how AI is influencing students' learning habits.</p>
   <div class="form-box" id="formBox"><!-- iframe injected on tap --></div>
   <a href="#" class="back" id="backBtn">&uarr; Back to top</a>
 </div></section>
- 
+
 <footer>
   <div class="foot-in">
     <span class="foot-line">The Impact of AI on Students' Learning Habits &middot; 2026</span>
@@ -150,7 +160,7 @@
     </a>
   </div>
 </footer>
- 
+
 <script>
   var FORM='https://docs.google.com/forms/d/e/1FAIpQLSclkKHSX_MvLSdPfkz4XAYbE0wqBLcePeHMa5z-cUGeIAFsAw/viewform?embedded=true';
   var openBtn=document.getElementById('openBtn'),
@@ -163,9 +173,34 @@
     intro.style.display='none';
     survey.classList.add('open');
     if(!loaded){
+      // show loading state immediately
+      var load=document.createElement('div');
+      load.className='form-loading';
+      load.innerHTML='<div class="spinner"></div><span class="lmsg">Loading survey&hellip;</span>';
+      box.appendChild(load);
+
+      var done=false;
+      function hideLoader(){
+        if(done) return; done=true;
+        load.classList.add('hide');
+        setTimeout(function(){ if(load.parentNode) load.parentNode.removeChild(load); },450);
+      }
+
       var f=document.createElement('iframe');
-      f.src=FORM; f.title='AI Research Survey'; f.setAttribute('loading','eager');
-      box.appendChild(f); loaded=true;
+      f.title='AI Research Survey'; f.setAttribute('loading','eager');
+      f.addEventListener('load',hideLoader);
+      f.src=FORM;
+      box.appendChild(f);
+
+      // if it's slow, reassure the user
+      setTimeout(function(){
+        var m=load.querySelector('.lmsg');
+        if(m && !done) m.textContent='Still loading\u2026 the form is large.';
+      },4000);
+      // safety net: never let the spinner hang forever
+      setTimeout(hideLoader,12000);
+
+      loaded=true;
     }
     window.scrollTo(0,0);
   });
