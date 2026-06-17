@@ -6,7 +6,7 @@ are shaping the way students study, solve problems, and manage their academic wo
 The page introduces the research, then loads an embedded Google Form on demand so
 responses can be collected directly from the site.
 
-🔗 **Live site:** https://YOUR_USERNAME.github.io/impact-of-ai/
+🔗 **Live site:** https://nogasante.github.io/impact-of-ai/
 
 ---
 
